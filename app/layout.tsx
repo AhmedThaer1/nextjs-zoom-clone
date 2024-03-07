@@ -5,6 +5,7 @@ import Hero from "@/components/Hero";
 import Footer from "@/components/Footer";
 
 import "./globals.css";
+import Nav from "@/components/Nav";
 
 const dmSans = DM_Sans({ subsets: ["latin"] });
 
@@ -22,6 +23,7 @@ export default function RootLayout({
     <html lang="en">
       <body className={dmSans.className}>
         <main className="max-w-7xl mx-auto bg-[#0F1117]">
+          <Nav />
           <Hero />
           {children}
           <Footer />
