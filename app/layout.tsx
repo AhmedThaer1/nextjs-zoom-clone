@@ -1,34 +1,32 @@
 import type { Metadata } from "next";
-import { DM_Sans } from "next/font/google";
-
-import Hero from "@/components/Hero";
-import Footer from "@/components/Footer";
-
+import { Inter } from "next/font/google";
 import "./globals.css";
-import Nav from "@/components/Nav";
+import { ClerkProvider } from "@clerk/nextjs";
+import Navbar from "@/components/Navbar";
+import ClientProvider from "./ClinetProvider";
 
-const dmSans = DM_Sans({ subsets: ["latin"] });
+const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: "Anime Vault",
-  description: "Your favorite anime, all in one place.",
+  title: "Zoominga",
+  description: "A video calling app built with Next.js & Stream",
 };
 
 export default function RootLayout({
   children,
-}: {
+}: Readonly<{
   children: React.ReactNode;
-}) {
+}>) {
   return (
-    <html lang="en">
-      <body className={dmSans.className}>
-        <main className="max-w-7xl mx-auto bg-[#0F1117]">
-          <Nav />
-          <Hero />
-          {children}
-          <Footer />
-        </main>
-      </body>
-    </html>
+    <ClerkProvider>
+      <html lang="en">
+        <body className={inter.className}>
+          <ClientProvider>
+            <Navbar />
+            <main className="mx-auto max-w-5xl px-3 py-6">{children}</main>
+          </ClientProvider>
+        </body>
+      </html>
+    </ClerkProvider>
   );
 }
