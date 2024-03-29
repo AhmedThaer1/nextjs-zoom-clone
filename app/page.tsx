@@ -1,9 +1,7 @@
+import CreateMeetingPage from "./CreateMeetingPage";
+
 async function Home() {
-  return (
-    <>
-      <div></div>
-    </>
-  );
+  return <CreateMeetingPage />;
 }
 
 export default Home;
