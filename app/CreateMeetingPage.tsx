@@ -1,16 +1,47 @@
 "use client";
 
+import {
+  DescriptionInputProps,
+  ParticipantsInputProps,
+  StartTimeInputProps,
+} from "@/interfaces";
 import { useUser } from "@clerk/nextjs";
-import { useStreamVideoClient } from "@stream-io/video-react-sdk";
+import { Call, useStreamVideoClient } from "@stream-io/video-react-sdk";
 import { Loader2 } from "lucide-react";
 import { useState } from "react";
 
 const CreateMeetingPage = () => {
   const [descriptionInput, setDescriptionInput] = useState("");
   const [startTimeInput, setStartTimeInput] = useState("");
+  const [participantsInput, setParticipantsInput] = useState("");
+  const [call, setCall] = useState<Call>();
+
   const client = useStreamVideoClient();
 
   const { user } = useUser();
+
+  async function createMeeting() {
+    if (!client || !user) {
+      return;
+    }
+
+    try {
+      const id = crypto.randomUUID();
+
+      const call = client.call("default", id);
+
+      await call.getOrCreate({
+        data: {
+          custom: { description: descriptionInput },
+        },
+      });
+
+      setCall(call);
+    } catch (error) {
+      console.error(error);
+      alert("Failed to create meeting");
+    }
+  }
 
   if (!client || !user) {
     return <Loader2 className="mx-auto animate-spin" />;
@@ -27,17 +58,20 @@ const CreateMeetingPage = () => {
           onChange={setDescriptionInput}
         />
         <StartTimeInput value={startTimeInput} onChange={setStartTimeInput} />
+        <ParticipantsInput
+          value={participantsInput}
+          onChange={setParticipantsInput}
+        />
+        <button onClick={createMeeting} className="w-full">
+          Create Meeting
+        </button>
       </div>
+      {call && <MeetingLink call={call} />}
     </div>
   );
 };
 
 export default CreateMeetingPage;
-
-interface DescriptionInputProps {
-  value: string;
-  onChange: (value: string) => void;
-}
 
 function DescriptionInput({ value, onChange }: DescriptionInputProps) {
   const [active, setActive] = useState(false);
@@ -71,13 +105,14 @@ function DescriptionInput({ value, onChange }: DescriptionInputProps) {
   );
 }
 
-interface StartTimeInputProps {
-  value: string;
-  onChange: (value: string) => void;
-}
-
 function StartTimeInput({ value, onChange }: StartTimeInputProps) {
   const [active, setActive] = useState(false);
+
+  const dateTimeLocal = new Date(
+    new Date().getTime() - new Date().getTimezoneOffset() * 60_000,
+  )
+    .toISOString()
+    .slice(0, 16);
 
   return (
     <div className="space-y-2">
@@ -99,7 +134,7 @@ function StartTimeInput({ value, onChange }: StartTimeInputProps) {
           checked={active}
           onChange={() => {
             setActive(true);
-            onChange("");
+            onChange(dateTimeLocal);
           }}
         />
         Schedule a Meeting
@@ -107,9 +142,61 @@ function StartTimeInput({ value, onChange }: StartTimeInputProps) {
       {active && (
         <label className="block space-y-1">
           <span className="font-medium">Start Time</span>
-          <input />
+          <input
+            type="datetime-local"
+            value={value}
+            onChange={(e) => onChange(e.target.value)}
+            min={dateTimeLocal}
+            className="w-full rounded-md border border-gray-300 p-2"
+          />
         </label>
       )}
     </div>
   );
+}
+
+function ParticipantsInput({ value, onChange }: ParticipantsInputProps) {
+  const [active, setActive] = useState(false);
+
+  return (
+    <div className="space-y-2">
+      <div className="font-medium">Participants: </div>
+      <label className="flex items-center gap-1.5">
+        <input
+          type="radio"
+          checked={!active}
+          onChange={() => {
+            setActive(false);
+            onChange("");
+          }}
+        />
+        Everyone With Link Can Join
+      </label>
+      <label className="flex items-center gap-1.5">
+        <input type="radio" checked={active} onChange={() => setActive(true)} />
+        Private Saucy Meeting
+      </label>
+      {active && (
+        <label className="block space-y-1">
+          <span className="font-medium">Participant Emails:</span>
+          <textarea
+            value={value}
+            onChange={(e) => onChange(e.target.value)}
+            placeholder="Enter emails separated by commas"
+            className="w-full rounded-md border border-gray-300 p-2"
+          />
+        </label>
+      )}
+    </div>
+  );
+}
+
+interface MeetingLinkProps {
+  call: Call;
+}
+
+function MeetingLink({ call }: MeetingLinkProps) {
+  const meetingLink = `${process.env.NEXT_PUBLIC_BASE_URL}/meeting/${call.id}`;
+
+  return <div className="text-center">{meetingLink}</div>;
 }
