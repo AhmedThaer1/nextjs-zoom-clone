@@ -31,7 +31,7 @@ const MeetingPage = ({ id }: MeetingPageProps) => {
     return (
       <button
         onClick={async () => {
-          const call = client.call("default", id);
+          const call = client.call("privat-meeting", id);
           await call.join();
           setCall(call);
         }}

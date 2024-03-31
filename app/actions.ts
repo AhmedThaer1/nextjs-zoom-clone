@@ -1,7 +1,19 @@
 "use server";
 
-import { currentUser } from "@clerk/nextjs";
+import { clerkClient, currentUser } from "@clerk/nextjs/server";
 import { StreamClient } from "@stream-io/node-sdk";
+
+/**
+ * This function is used to generate a token for a user.
+ * It first retrieves the Stream API key and secret from the environment variables.
+ * If either the API key or secret is not found, it throws an error.
+ * It then fetches the current user. If the user is not authenticated, it throws an error.
+ * A new StreamClient is created using the API key and secret.
+ * An expiry time for the token is set to one hour from the current time.
+ * The issuedAt time is set to one minute before the current time.
+ * A token is then created for the user using the StreamClient, with the user's id, the expiry time, and the issuedAt time.
+ * The generated token is logged to the console and then returned.
+ */
 
 export async function getToken() {
   const streamApiKey = process.env.NEXT_PUBLIC_STREAM_VIDEO_API_KEY;
@@ -30,4 +42,12 @@ export async function getToken() {
   console.log("Generated token", token);
 
   return token;
+}
+
+// retrieve the user ids for the given email addresses from clerk client
+export async function getUserIds(emailAddresses: string[]) {
+  const res = await clerkClient.users.getUserList({
+    emailAddress: emailAddresses,
+  });
+  return res.map((user) => user.id);
 }
