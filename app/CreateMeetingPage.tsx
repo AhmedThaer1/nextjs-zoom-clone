@@ -9,6 +9,7 @@ import { useUser } from "@clerk/nextjs";
 import {
   Call,
   MemberRequest,
+  Tooltip,
   useStreamVideoClient,
 } from "@stream-io/video-react-sdk";
 import { Copy, Loader2 } from "lucide-react";
@@ -16,6 +17,8 @@ import { useState } from "react";
 import { getUserIds } from "./actions";
 import Button from "@/components/Button";
 import Link from "next/link";
+import { PiQuestionFill } from "react-icons/pi";
+import ToolTip from "@/components/Tooltip";
 
 const CreateMeetingPage = () => {
   const [descriptionInput, setDescriptionInput] = useState("");
@@ -83,7 +86,7 @@ const CreateMeetingPage = () => {
         Welcome <span className="uppercase">{user.username}</span>
       </h1>
       <div className="mx-auto w-80 space-y-6 rounded-md bg-slate-100 p-5">
-        <h2 className="text-xl font-bold">Create a new meeting</h2>
+        <h2 className="text-xl font-bold uppercase">Create a new meeting</h2>
         <DescriptionInput
           value={descriptionInput}
           onChange={setDescriptionInput}
@@ -126,6 +129,7 @@ function DescriptionInput({ value, onChange }: DescriptionInputProps) {
           <span className="font-medium">Description</span>
           <textarea
             value={value}
+            placeholder="Enter a description for the meeting"
             onChange={(e) => onChange(e.target.value)}
             maxLength={500}
             className="w-full rounded-md border border-gray-300 p-2"
@@ -201,15 +205,20 @@ function ParticipantsInput({ value, onChange }: ParticipantsInputProps) {
             onChange("");
           }}
         />
-        Everyone With Link Can Join
+        Public
       </label>
       <label className="flex items-center gap-1.5">
         <input type="radio" checked={active} onChange={() => setActive(true)} />
-        Private Saucy Meeting
+        Private Saucy
       </label>
       {active && (
         <label className="block space-y-1">
-          <span className="font-medium">Participant Emails:</span>
+          <div className="flex items-start justify-between">
+            <span className="font-medium">Invite By Emails:</span>
+            <ToolTip text="Please separate the emails with commas (,)">
+              <PiQuestionFill className="text-2xl" />
+            </ToolTip>
+          </div>
           <textarea
             value={value}
             onChange={(e) => onChange(e.target.value)}

@@ -25,3 +25,9 @@ export interface MeetingPageProps {
 export interface MeetingProps {
   params: { id: string };
 }
+
+// ToolTip Interfaces \\
+export interface ToolTipProps {
+  children: React.ReactNode;
+  text: string;
+}
