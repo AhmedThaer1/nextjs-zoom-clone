@@ -18,7 +18,7 @@ import { getUserIds } from "./actions";
 import Button from "@/components/Button";
 import Link from "next/link";
 import { PiQuestionFill } from "react-icons/pi";
-import ToolTip from "@/components/Tooltip";
+import ToolTip from "@/components/ToolTip";
 
 const CreateMeetingPage = () => {
   const [descriptionInput, setDescriptionInput] = useState("");
