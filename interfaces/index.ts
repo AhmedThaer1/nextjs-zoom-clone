@@ -21,6 +21,10 @@ export interface MeetingPageProps {
   id: string;
 }
 
+export interface SetupUIProps {
+  onSetupComplete: () => void;
+}
+
 // meeting main Page Interfaces meeting/[id]/Page \\
 export interface MeetingProps {
   params: { id: string };
