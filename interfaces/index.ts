@@ -35,3 +35,8 @@ export interface ToolTipProps {
   children: React.ReactNode;
   text: string;
 }
+
+// left/page.tsx
+export interface PageProps {
+  params: { id: string };
+}

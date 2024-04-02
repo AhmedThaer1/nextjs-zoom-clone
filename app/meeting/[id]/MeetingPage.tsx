@@ -1,6 +1,8 @@
 "use client";
 
+import AudioIndicator from "@/components/AudioIndicator";
 import Button, { buttonClasses } from "@/components/Button";
+import DynamicCallLayout from "@/components/DynamicCallLayout";
 import PermissionPrompt from "@/components/PermissionPrompt";
 import useLoadCall from "@/hooks/useLoadCall";
 import useStreamCall from "@/hooks/useStreamCall";
@@ -16,6 +18,7 @@ import {
   useCallStateHooks,
   useStreamVideoClient,
   VideoPreview,
+  CallingState,
 } from "@stream-io/video-react-sdk";
 import { Loader2 } from "lucide-react";
 import Link from "next/link";
@@ -95,12 +98,24 @@ function MeetingScreen() {
         </p>
       )}
       {setupComplete ? (
-        <SpeakerLayout />
+        <CallUI />
       ) : (
         <SetupUI onSetupComplete={handleSetupComplete} />
       )}
     </div>
   );
+}
+
+function CallUI() {
+  const { useCallCallingState } = useCallStateHooks();
+
+  const callingState = useCallCallingState();
+
+  if (callingState !== CallingState.JOINED) {
+    return <Loader2 className="mx-auto animate-spin" />;
+  }
+
+  return <DynamicCallLayout />;
 }
 
 function SetupUI({ onSetupComplete }: SetupUIProps) {
@@ -132,6 +147,7 @@ function SetupUI({ onSetupComplete }: SetupUIProps) {
       <h1 className="text-center text-2xl font-bold">Setup</h1>
       <VideoPreview />
       <div className="flex h-16 items-center gap-3">
+        <AudioIndicator />
         <DeviceSettings />
       </div>
       <label className="flex items-center gap-2 font-medium">
