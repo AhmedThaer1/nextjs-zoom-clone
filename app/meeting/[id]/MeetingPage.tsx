@@ -4,6 +4,7 @@ import AudioIndicator from "@/components/AudioIndicator";
 import Button, { buttonClasses } from "@/components/Button";
 import DynamicCallLayout from "@/components/DynamicCallLayout";
 import PermissionPrompt from "@/components/PermissionPrompt";
+import RecordingList from "@/components/RecordingList";
 import useLoadCall from "@/hooks/useLoadCall";
 import useStreamCall from "@/hooks/useStreamCall";
 import { MeetingPageProps, SetupUIProps } from "@/interfaces";
@@ -194,6 +195,10 @@ function MeetingEndedScreen() {
       <Link className={buttonClasses} href="/">
         Back Home
       </Link>
+      <div className="space-y-3">
+        <h2 className="text-center text-xl font-bold">Recordings</h2>
+        <RecordingList />
+      </div>
     </div>
   );
 }

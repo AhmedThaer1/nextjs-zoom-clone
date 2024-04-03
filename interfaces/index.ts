@@ -28,6 +28,7 @@ export interface SetupUIProps {
 // meeting main Page Interfaces meeting/[id]/Page \\
 export interface MeetingProps {
   params: { id: string };
+  searchParams: { guest: string };
 }
 
 // ToolTip Interfaces \\
