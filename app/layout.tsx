@@ -20,10 +20,12 @@ export default function RootLayout({
 }>) {
   return (
     <ClerkProvider>
-      <html lang="en">
+      <html lang="en" className="bg-[#171717]">
         <body className={inter.className}>
           <ClientProvider>
-            <Navbar />
+            <div className="bg-white text-black">
+              <Navbar />
+            </div>
             <main className="mx-auto max-w-5xl px-3 py-6">{children}</main>
           </ClientProvider>
         </body>

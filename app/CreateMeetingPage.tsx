@@ -78,11 +78,11 @@ const CreateMeetingPage = () => {
   }
 
   if (!client || !user) {
-    return <Loader2 className="mx-auto animate-spin" />;
+    return <Loader2 className="mx-auto animate-spin text-white" />;
   }
   return (
     <div className="flex flex-col items-center space-y-6">
-      <h1 className="text-center text-2xl font-bold">
+      <h1 className="text-center text-2xl font-bold text-white">
         Welcome <span className="uppercase">{user.username}</span>
       </h1>
       <div className="mx-auto w-80 space-y-6 rounded-md bg-slate-100 p-5">
@@ -239,7 +239,7 @@ function MeetingLink({ call }: MeetingLinkProps) {
   const meetingLink = `${process.env.NEXT_PUBLIC_BASE_URL}/meeting/${call.id}`;
 
   return (
-    <div className="flex flex-col items-center gap-3 text-center">
+    <div className="flex flex-col items-center gap-3 text-center text-white">
       <div className="flex items-center gap-3">
         <span>
           Invitation Link:{" "}
@@ -279,7 +279,7 @@ function getMailsToLink(
   description?: string,
 ) {
   const startDateFormatted = startsAt
-    ? startsAt.toLocaleDateString("en-US", {
+    ? startsAt.toLocaleString("en-US", {
         dateStyle: "full",
         timeStyle: "short",
       })

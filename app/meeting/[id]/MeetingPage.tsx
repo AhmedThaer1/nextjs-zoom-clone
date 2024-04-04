@@ -31,11 +31,11 @@ const MeetingPage = ({ id }: MeetingPageProps) => {
   const { call, callLoading } = useLoadCall(id);
 
   if (!userLoaded || callLoading) {
-    return <Loader2 className="mx-auto animate-spin" />;
+    return <Loader2 className="mx-auto animate-spin text-white" />;
   }
 
   if (!call) {
-    return <p className="text-center font-bold ">Call Not Found</p>;
+    return <p className="text-center font-bold text-white">Call Not Found</p>;
   }
 
   const notAllowedToJoinCall =
@@ -44,7 +44,7 @@ const MeetingPage = ({ id }: MeetingPageProps) => {
 
   if (notAllowedToJoinCall) {
     return (
-      <p className="text-center font-bold">
+      <p className="text-center font-bold text-white">
         You are not allowed to join this call. Please contact the host for
         access.
       </p>
@@ -94,8 +94,9 @@ function MeetingScreen() {
   return (
     <div className="space-y-6">
       {description && (
-        <p className="text-center">
-          Meeting Description: <span className="font-bold">{description}</span>
+        <p className="text-center text-white">
+          Meeting Description:{" "}
+          <span className="font-bold text-white">{description}</span>
         </p>
       )}
       {setupComplete ? (
@@ -113,7 +114,7 @@ function CallUI() {
   const callingState = useCallCallingState();
 
   if (callingState !== CallingState.JOINED) {
-    return <Loader2 className="mx-auto animate-spin" />;
+    return <Loader2 className="mx-auto animate-spin text-white" />;
   }
 
   return <DynamicCallLayout />;
@@ -144,7 +145,7 @@ function SetupUI({ onSetupComplete }: SetupUIProps) {
   }
 
   return (
-    <div className="flex flex-col items-center gap-3">
+    <div className="flex flex-col items-center gap-3 text-white">
       <h1 className="text-center text-2xl font-bold">Setup</h1>
       <VideoPreview />
       <div className="flex h-16 items-center gap-3">
@@ -190,7 +191,7 @@ function UpcomingMeetingScreen() {
 
 function MeetingEndedScreen() {
   return (
-    <div className="flex flex-col items-center gap-6">
+    <div className="flex flex-col items-center gap-6 text-white">
       <p className="font-bold">This Meeting Has Ended</p>
       <Link className={buttonClasses} href="/">
         Back Home

@@ -6,7 +6,7 @@ import React from "react";
 
 const page = ({ params: { id } }: PageProps) => {
   return (
-    <div className="flex flex-col items-center gap-3">
+    <div className="flex flex-col items-center gap-3 text-white">
       <p className="font-bold">You left this meeting.</p>
       <Link
         href={`/meeting/${id}`}

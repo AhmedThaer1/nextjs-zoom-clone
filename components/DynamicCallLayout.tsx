@@ -5,11 +5,7 @@ import {
   PaginatedGridLayout,
   SpeakerLayout,
 } from "@stream-io/video-react-sdk";
-import {
-  BetweenHorizonalEnd,
-  BetweenVerticalEnd,
-  LayoutGrid,
-} from "lucide-react";
+import { LayoutPanelLeft, LayoutPanelTop, LayoutGrid } from "lucide-react";
 import { useState } from "react";
 import EndCallButtons from "./EndCallButtons";
 import { useRouter } from "next/navigation";
@@ -31,7 +27,7 @@ export default function DynamicCallLayout() {
   const router = useRouter();
 
   return (
-    <div className="space-y-3">
+    <div className="space-y-3 ">
       <CallLayoutButtons layout={layout} setLayout={setLayout} />
       <CallViewLayout layout={layout} />
       <CallControls onLeave={() => router.push(`/meeting/${call.id}/left`)} />
@@ -42,15 +38,15 @@ export default function DynamicCallLayout() {
 
 const CallLayoutButtons = ({ layout, setLayout }: CallLayoutButtonsProps) => {
   return (
-    <div className="mx-auto w-fit space-x-6">
+    <div className="mx-auto w-fit space-x-6 text-white">
       <button onClick={() => setLayout("speaker-vertical")}>
-        <BetweenVerticalEnd
+        <LayoutPanelTop
           className={layout !== "speaker-vertical" ? "text-gray-400" : ""}
         />
       </button>
 
       <button onClick={() => setLayout("speaker-horizontal")}>
-        <BetweenHorizonalEnd
+        <LayoutPanelLeft
           className={layout !== "speaker-horizontal" ? "text-gray-400" : ""}
         />
       </button>

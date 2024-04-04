@@ -6,7 +6,7 @@ import Link from "next/link";
 
 const MeetingLoginPage = () => {
   return (
-    <div className="ms-auto w-fit space-y-3">
+    <div className="mx-auto w-fit space-y-3 text-white">
       <h1 className="text-center text-2xl font-bold">Join meeting</h1>
       <ClerkLoaded>
         <SignInButton>
@@ -20,7 +20,7 @@ const MeetingLoginPage = () => {
         </Link>
       </ClerkLoaded>
       <ClerkLoading>
-        <Loader2 className="mx-auto animate-spin" />
+        <Loader2 className="mx-auto animate-spin text-white" />
       </ClerkLoading>
     </div>
   );

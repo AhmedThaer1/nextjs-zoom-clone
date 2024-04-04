@@ -27,7 +27,7 @@ const AudioIndicator = () => {
   if (!isEnabled) return null;
 
   return (
-    <div className="flex w-72 items-center gap-3 rounded-md bg-slate-900 p-4">
+    <div className="flex w-72 items-center gap-3 rounded-md bg-slate-900 p-4 text-white">
       <Icon icon="mic" />
       <div className="h-1.5 flex-1 rounded-md bg-white">
         <div

@@ -36,9 +36,9 @@ const MyMeetingPage = () => {
   }, [client, user?.id]);
 
   return (
-    <div className="space-y-3">
+    <div className="space-y-3 text-white">
       <h1 className="text-center text-2xl font-bold">My Meetings</h1>
-      {!calls && <Loader2 className="mx-auto animate-spin" />}
+      {!calls && <Loader2 className="mx-auto animate-spin text-white" />}
       {calls?.length === 0 && <p>No meetings found</p>}
       <ul className="list-inside list-disc space-y-2">
         {calls?.map((call) => <MeetingItems key={call.id} call={call} />)}

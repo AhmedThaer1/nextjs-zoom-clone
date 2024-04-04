@@ -3,7 +3,7 @@ import React from "react";
 
 const PermissionPrompt = () => {
   return (
-    <div className="flex flex-col items-center gap-3">
+    <div className="flex flex-col items-center gap-3 text-white">
       <div className="flex items-center gap-3">
         <Webcam size={40} />
         <Mic size={40} />

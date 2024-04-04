@@ -15,7 +15,8 @@ const RecordingList = () => {
     return <p className="text-center">Please sign in to view recordings.</p>;
   }
 
-  if (recordingsLoading) return <Loader2 className="mx-auto animate-spin" />;
+  if (recordingsLoading)
+    return <Loader2 className="mx-auto animate-spin text-white" />;
 
   return (
     <div className="space-y-3 text-center">
