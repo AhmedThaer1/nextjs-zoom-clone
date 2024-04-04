@@ -13,4 +13,5 @@ if you want to set it up create .env.local and go to Stream-sdk website and crea
 and this is it lastly just make sure you match the names of the .env that been used in the code or you can change then as you like
 
 
-
+Live Preview: 
+https://nextjs-zoom-clone-pearl.vercel.app/
